@@ -24,11 +24,11 @@ public interface DemoRestController {
     @ResponseStatus(HttpStatus.OK)
     HashResult sha1(@RequestBody String data);
 
-    @GetMapping(value = "cached")
+    @GetMapping(value = "cache")
     @ResponseStatus(HttpStatus.OK)
-    List<HashResult> allCached();
+    List<HashResult> cache();
 
-    @DeleteMapping(value = "clear-cache")
+    @DeleteMapping(value = "cache")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void clearCache();
 }

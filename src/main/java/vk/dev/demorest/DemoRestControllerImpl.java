@@ -35,13 +35,13 @@ public class DemoRestControllerImpl implements DemoRestController {
     }
 
     @Override
-    @GetMapping(value = "cached")
-    public List<HashResult> allCached() {
+    @GetMapping(value = "cache")
+    public List<HashResult> cache() {
         return demoService.allCached();
     }
 
     @Override
-    @DeleteMapping(value = "clear-cache")
+    @DeleteMapping(value = "cache")
     public void clearCache() {
         demoService.clearCache();
     }

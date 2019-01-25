@@ -1,16 +1,18 @@
 package vk.dev.demorest;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.NoArgsConstructor;
 
 /**
  * HashResult.
  *
  * @author vladimir_kuragin
  */
-@Value
+@Data
 @EqualsAndHashCode(of = {"hashAlg", "key"})
+@NoArgsConstructor
 @AllArgsConstructor
 public class HashResult {
     private HashAlg hashAlg;

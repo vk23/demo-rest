@@ -2,6 +2,7 @@
 /build/
 gradlew*
 gradle/
+target/
 
 ### STS ###
 .apt_generated

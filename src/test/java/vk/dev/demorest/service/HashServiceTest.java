@@ -11,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import vk.dev.demorest.model.HashAlg;
 import vk.dev.demorest.model.HashResult;
-import vk.dev.demorest.service.HashService;
-import vk.dev.demorest.service.HashServiceImpl;
 
 import java.util.List;
 

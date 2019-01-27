@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.springframework.stereotype.Service;
+import vk.dev.demorest.LRUCache;
 import vk.dev.demorest.model.HashAlg;
 import vk.dev.demorest.model.HashResult;
 
@@ -11,10 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * DemoService.
@@ -24,18 +22,16 @@ import java.util.Map;
 @Service
 @Slf4j
 public class HashServiceImpl implements HashService {
-    private static final int MAX_ITEMS = 10;
 
-    private LinkedHashMap<String, HashResult> md5Cache = new LinkedHashMap<>();
-    private LinkedHashMap<String, HashResult> sha1Cache = new LinkedHashMap<>();
+    private LRUCache<String, HashResult> md5Cache = new LRUCache<>();
+    private LRUCache<String, HashResult> sha1Cache = new LRUCache<>();
 
     public HashResult md5(String data) {
         log.debug("Calculating md5 for {}", data);
-        HashResult result = null;
 
-        if (md5Cache.containsKey(data)) {
+        HashResult result = md5Cache.get(data);
+        if (result != null) {
             log.debug("Returning cached md5 for {}", data);
-            result = md5Cache.remove(data);
         } else {
             String hash = hash(data, "md5");
             result = new HashResult(HashAlg.MD5, data, hash);
@@ -46,11 +42,10 @@ public class HashServiceImpl implements HashService {
 
     public HashResult sha1(String data) {
         log.debug("Calculating md5 for {}", data);
-        HashResult result = null;
 
-        if (sha1Cache.containsKey(data)) {
+        HashResult result = sha1Cache.get(data);
+        if (result != null) {
             log.debug("Returning cached sha1 for {}", data);
-            result = sha1Cache.remove(data);
         } else {
             String hash = hash(data, "sha1");
             result = new HashResult(HashAlg.SHA1, data, hash);
@@ -60,15 +55,10 @@ public class HashServiceImpl implements HashService {
     }
 
     private void addToCache(@NonNull String key, @NonNull HashResult result) {
-        LinkedHashMap<String, HashResult> cache = (HashAlg.MD5.equals(result.getHashAlg()))
+        LRUCache<String, HashResult> cache = (HashAlg.MD5.equals(result.getHashAlg()))
                 ? md5Cache
                 : sha1Cache;
-        cache.put(key, result);
-        if (cache.size() > MAX_ITEMS) {
-            Iterator<Map.Entry<String, HashResult>> iterator = cache.entrySet().iterator();
-            iterator.next();
-            iterator.remove();
-        }
+        cache.add(key, result);
     }
 
     private String hash(String data, String alg) {

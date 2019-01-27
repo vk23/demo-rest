@@ -1,9 +1,11 @@
-package vk.dev.demorest;
+package vk.dev.demorest.service;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.springframework.stereotype.Service;
+import vk.dev.demorest.model.HashAlg;
+import vk.dev.demorest.model.HashResult;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -21,7 +23,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class DemoService {
+public class HashServiceImpl implements HashService {
     private static final int MAX_ITEMS = 10;
 
     private LinkedHashMap<String, HashResult> md5Cache = new LinkedHashMap<>();
@@ -81,7 +83,7 @@ public class DemoService {
         return result;
     }
 
-    public List<HashResult> allCached() {
+    public List<HashResult> cached() {
         log.debug("Retrieving all cached results");
         List<HashResult> result = new ArrayList<>();
         result.addAll(md5Cache.values());

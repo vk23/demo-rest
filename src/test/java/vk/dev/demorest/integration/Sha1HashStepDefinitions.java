@@ -5,8 +5,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import vk.dev.demorest.HashAlg;
-import vk.dev.demorest.HashResult;
+import vk.dev.demorest.model.HashAlg;
+import vk.dev.demorest.model.HashResult;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;

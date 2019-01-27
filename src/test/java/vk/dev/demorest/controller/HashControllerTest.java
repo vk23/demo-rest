@@ -1,4 +1,4 @@
-package vk.dev.demorest;
+package vk.dev.demorest.controller;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
@@ -16,16 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import vk.dev.demorest.model.HashAlg;
+import vk.dev.demorest.model.HashResult;
+import vk.dev.demorest.service.HashServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class DemoRestControllerTest {
+public class HashControllerTest {
 
     @Autowired
-    private DemoService demoService;
+    private HashServiceImpl hashServiceImpl;
 
     @Value("${local.server.port}")
     private int port;
@@ -35,13 +38,13 @@ public class DemoRestControllerTest {
         RestAssured.baseURI = "http://localhost/hash/";
         RestAssured.port = port;
 
-        demoService.md5("1");
-        demoService.sha1("2");
+        hashServiceImpl.md5("1");
+        hashServiceImpl.sha1("2");
     }
 
     @After
     public void tearDown() {
-        demoService.clearCache();
+        hashServiceImpl.clearCache();
     }
 
     @Test

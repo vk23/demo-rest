@@ -1,4 +1,4 @@
-package vk.dev.demorest;
+package vk.dev.demorest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

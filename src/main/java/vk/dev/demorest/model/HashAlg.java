@@ -1,4 +1,4 @@
-package vk.dev.demorest;
+package vk.dev.demorest.model;
 
 /**
  * HashAlg.
